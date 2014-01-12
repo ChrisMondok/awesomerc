@@ -1,15 +1,17 @@
 -- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
+gears = require("gears")
+awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
-local wibox = require("wibox")
+wibox = require("wibox")
 -- Theme handling library
-local beautiful = require("beautiful")
+beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
+naughty = require("naughty")
+menubar = require("menubar")
+
+netgraph = require("netgraph")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -40,16 +42,12 @@ end
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/home/chris/.config/awesome/themes/charcoal/theme.lua")
 
--- require("activities")
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-local modkey = "Mod4"
+modkey = "Mod4"
+
+terminal = "terminology"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-local layouts =
+layouts =
 {
 	awful.layout.suit.tile,
 	awful.layout.suit.tile.left,
@@ -75,10 +73,8 @@ end
 -- }}}
 
 -- {{{ Tags
--- Define a tag table which hold all screen tags.
 tags = {}
 for s = 1, screen.count() do
-    -- Each screen has its own tag table.
     tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
@@ -92,7 +88,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 
 -- Create a wibox for each screen and add it
-local mywibox = {}
+local topwibox = {}
 local mypromptbox = {}
 local mylayoutbox = {}
 local mytaglist = {}
@@ -157,20 +153,16 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    topwibox[s] = awful.wibox({ position = "top", screen = s })
 
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
 
 	if s == 1 then
-		downspeedgraph = awful.widget.graph({ width = 64, height = 20 })
-		downspeedgraph:set_scale(true)
-		downspeedgraph:set_color("#448844")
+		downspeedgraph = netgraph.down({ width = 64, height = 20 })
 		left_layout:add(downspeedgraph)
-		upspeedgraph = awful.widget.graph({ width = 64, height = 20 })
-		upspeedgraph:set_scale(true)
-		upspeedgraph:set_color("#884444")
+		upspeedgraph = netgraph.up({width = 64, height = 20})
 		left_layout:add(upspeedgraph)
 	end
 
@@ -188,7 +180,7 @@ for s = 1, screen.count() do
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
 
-    mywibox[s]:set_widget(layout)
+    topwibox[s]:set_widget(layout)
 end
 -- }}}
 
@@ -406,44 +398,6 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- {{{ Bandwidth Graph
-local tx_bytes = 0
-local rx_bytes = 0
-
-local bandtip = awful.tooltip({ objects = {downspeedgraph, upspeedgraph}})
-
-local updateBandwidthGraph = (function()
-	local rdiff = 0
-	local tdiff = 0
-	for line in io.lines("/sys/class/net/eth0/statistics/rx_bytes") do
-		local r = tonumber(line)
-		if rx_bytes > 0 then
-			rdiff = r - rx_bytes
-		end
-		rx_bytes = r;
-	end
-	for line in io.lines("/sys/class/net/eth0/statistics/tx_bytes") do
-		local t = tonumber(line)
-		if tx_bytes > 0 then
-			tdiff = t - tx_bytes
-		end
-		tx_bytes = t;
-	end
-
-	downspeedgraph:add_value(rdiff)
-	upspeedgraph:add_value(tdiff)
-
-	bandtip:set_text(
-		string.format("%9.4f kBps down\n%9.4f kBps up",rdiff/1024, tdiff/1024)
-	)
-end)
-
-local bandwidthtimer = timer({ timeout = 1 })
-bandwidthtimer:connect_signal("timeout", updateBandwidthGraph)
-bandwidthtimer:start()
-
--- }}}
-
 os.execute("/usr/bin/compton -f -F -I 0.1 -O 0.1 &")
 
--- vim: set fdm=marker
+-- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80:fdm=marker
