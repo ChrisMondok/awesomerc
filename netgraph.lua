@@ -1,6 +1,6 @@
 local module = {}
 
-awful = require("awful")
+local awful = require("awful")
 
 local new = function(direction, config)
 	local t = timer({ timeout = 1 })
