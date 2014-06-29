@@ -65,11 +65,25 @@ layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-	for s = 1, screen.count() do
-		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-	end
+
+local setWallpaper = function()
+	os.execute("/usr/bin/feh --bg-fill -z /home/chris/Pictures/Backgrounds/rotation/");
 end
+
+setWallpaper()
+
+wallpaperTimer = timer({timeout = 60 * 5})
+wallpaperTimer:connect_signal("timeout", function()
+	setWallpaper()
+	wallpaperTimer:again();
+end)
+
+wallpaperTimer:start()
+-- if beautiful.wallpaper then
+-- 	for s = 1, screen.count() do
+-- 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+-- 	end
+-- end
 -- }}}
 
 -- {{{ Tags
