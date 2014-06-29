@@ -62,6 +62,10 @@ layouts =
 	awful.layout.suit.magnifier,
 	awful.layout.suit.floating,
 }
+
+local primaryScreen = 3
+
+naughty.config.defaults.screen = primaryScreen
 -- }}}
 
 -- {{{ Wallpaper
@@ -108,7 +112,6 @@ local mylayoutbox = {}
 local mytaglist = {}
 local downspeedgraph = {}
 local upspeedgraph = {}
-local primaryScreen = 3
 mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 1, awful.tag.viewonly),
 	awful.button({ }, 2, closetag),
