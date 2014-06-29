@@ -108,6 +108,7 @@ local mylayoutbox = {}
 local mytaglist = {}
 local downspeedgraph = {}
 local upspeedgraph = {}
+local primaryScreen = 3
 mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 1, awful.tag.viewonly),
 	awful.button({ }, 2, closetag),
@@ -174,7 +175,7 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
 
-	if s == 3 then
+	if s == primaryScreen then
 		downspeedgraph = netgraph.down({ width = 64, height = 20 })
 		left_layout:add(downspeedgraph)
 		upspeedgraph = netgraph.up({width = 64, height = 20})
@@ -186,7 +187,7 @@ for s = 1, screen.count() do
 
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
-	if s == 1 then right_layout:add(wibox.widget.systray()) end
+	if s == primaryScreen then right_layout:add(wibox.widget.systray()) end
 	right_layout:add(mylayoutbox[s])
 
 	-- Now bring it all together (with the tasklist in the middle)
