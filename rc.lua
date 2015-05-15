@@ -356,6 +356,10 @@ awful.rules.rules = {
 		rule = { name= "File Operation Progress" },
 		properties = { floating = true }
 	},
+	{
+		rule = { class = "conky" },
+		properties = { border_width = 0 }
+	}
 }
 -- }}}
 
