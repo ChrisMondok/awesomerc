@@ -45,6 +45,7 @@ beautiful.init("/home/chris/.config/awesome/themes/charcoal/theme.lua")
 modkey = "Mod4"
 
 terminal = "terminology"
+fileBrowser = "thunar"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
@@ -100,10 +101,42 @@ end
 -- {{{ Menu
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+
+awesomemenu = { 
+	{ "restart", awesome.restart, "/usr/share/icons/Faenza/actions/32/reload.png" },
+	{ "quit", awesome.quit, "/usr/share/icons/Faenza/actions/32/application-exit.png" }
+}
+
+systemmenu = {
+	{ "suspend", "systemctl suspend", "/usr/share/icons/Faenza/apps/32/system-suspend.png" },
+	{ "reboot", "systemctl restart", "/usr/share/icons/Faenza/apps/32/system-restart.png"},
+	{ "power off", "systemctl poweroff", "/usr/share/icons/Faenza/apps/32/system-shut-down.png" }
+}
+
+places = {
+	{ "home", fileBrowser .. " /home/chris", "/usr/share/icons/Faenza/places/32/folder-home.png" },
+	{ "downloads", fileBrowser .. " /home/chris/Downloads/", "/usr/share/icons/Faenza/places/32/folder-downloads.png" },
+	{ "music", fileBrowser .. " /home/chris/Music/", "/usr/share/icons/Faenza/places/32/folder-music.png" },
+	{ "quicksilver", fileBrowser .. " /mnt/quicksilver/", "/usr/share/icons/Faenza/devices/32/drive-harddisk-usb.png" },
+}
+
+mainmenu = awful.menu({
+	items = {
+		{ "terminal", terminal, "/usr/share/icons/terminology.png" },
+		{ "vivaldi", "vivaldi-preview", "/usr/share/icons/hicolor/32x32/apps/vivaldi.png" },
+		{ "spotify", "spotify", "/usr/share/icons/hicolor/32x32/apps/spotify-client.png" },
+		{ "file browser", fileBrowser, "/usr/share/icons/Faenza/devices/32/drive-harddisk.png" },
+		{ "geary", "geary", "/usr/share/icons/hicolor/32x32/apps/geary.png" },
+		{ "places", places, "/usr/share/icons/Faenza/places/32/folder.png" },
+		{ "awesome", awesomemenu, "/usr/share/icons/Faenza/apps/32/session-properties.png" },
+		{ "system", systemmenu, "/usr/share/icons/Faenza/categories/32/system_section.png" },
+	}
+})
+
+launcher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mainmenu });
 -- }}}
 
 -- {{{ Wibox
--- Create a textclock widget
 
 -- Create a wibox for each screen and add it
 local topwibox = {}
@@ -185,6 +218,7 @@ for s = 1, screen.count() do
 		left_layout:add(upspeedgraph)
 	end
 
+	left_layout:add(launcher)
 	left_layout:add(mytaglist[s])
 	left_layout:add(mypromptbox[s])
 
@@ -205,8 +239,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-	awful.button({ }, 3, function() os.execute("/usr/bin/gnome-pie -o 875 &") end),
-	-- awful.button({ }, 3, function () mymainmenu:toggle() end),
+	awful.button({ }, 3, function () mainmenu:toggle() end),
 	awful.button({ }, 4, awful.tag.viewprev),
 	awful.button({ }, 5, awful.tag.viewnext),
 	awful.button({ }, 6, awful.tag.viewprev),
