@@ -64,9 +64,6 @@ layouts =
 	awful.layout.suit.floating,
 }
 
-local primaryScreen = math.min(3, screen.count());
-
-naughty.config.defaults.screen = primaryScreen
 -- }}}
 
 -- {{{ Wallpaper
@@ -214,7 +211,7 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
 
-	if s == primaryScreen then
+	if s == 1 then
 		downspeedgraph = netgraph.down({ width = 64, height = 20 })
 		left_layout:add(downspeedgraph)
 		upspeedgraph = netgraph.up({width = 64, height = 20})
@@ -227,7 +224,7 @@ for s = 1, screen.count() do
 
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
-	if s == primaryScreen then
+	if s == 1 then
 		right_layout:add(myclock)
 		right_layout:add(wibox.widget.systray())
 	end
