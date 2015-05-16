@@ -144,6 +144,11 @@ local downspeedgraph = {}
 local upspeedgraph = {}
 local mytasklist = {}
 local myclock = awful.widget.textclock("%a %b %d %r", 1);
+
+myclock:buttons(awful.util.table.join(
+	awful.button({ }, 1, function() os.execute("/usr/bin/gsimplecal &") end )
+))
+
 mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 1, awful.tag.viewonly),
 	awful.button({ }, 2, closetag),
@@ -395,6 +400,10 @@ awful.rules.rules = {
 	{
 		rule = { class = "conky" },
 		properties = { border_width = 0 }
+	},
+	{
+		rule = { class = "Gsimplecal" },
+		properties = { y = 32 }
 	}
 }
 -- }}}
