@@ -1,5 +1,4 @@
 -- Standard awesome library
-gears = require("gears")
 awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
@@ -81,11 +80,6 @@ wallpaperTimer:connect_signal("timeout", function()
 end)
 
 wallpaperTimer:start()
--- if beautiful.wallpaper then
--- 	for s = 1, screen.count() do
--- 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
--- 	end
--- end
 -- }}}
 
 -- {{{ Tags
@@ -422,10 +416,6 @@ client.connect_signal("manage", function (c, startup)
 			awful.placement.no_offscreen(c)
 		end
 	end
-
-	--if c.class == "Rhythmbox" then
-	--	awful.client.movetotag(startActivity("music"),c)
-	--end
 
 	local titlebars_enabled = false
 	if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
