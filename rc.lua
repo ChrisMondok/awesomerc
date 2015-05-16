@@ -145,6 +145,8 @@ local mylayoutbox = {}
 local mytaglist = {}
 local downspeedgraph = {}
 local upspeedgraph = {}
+local mytasklist = {}
+local myclock = awful.widget.textclock("%a %b %d %r", 1);
 mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 1, awful.tag.viewonly),
 	awful.button({ }, 2, closetag),
@@ -156,7 +158,6 @@ mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 6, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end),
 	awful.button({ }, 7, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end)
 )
-mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
 	awful.button({ }, 1, function (c)
 		c.minimized = false
@@ -185,6 +186,8 @@ mytasklist.buttons = awful.util.table.join(
 		awful.client.focus.byidx(1)
 		if client.focus then client.focus:raise() end
 	end))
+
+
 
 for s = 1, screen.count() do
 	-- Create a promptbox for each screen
@@ -224,7 +227,10 @@ for s = 1, screen.count() do
 
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
-	if s == primaryScreen then right_layout:add(wibox.widget.systray()) end
+	if s == primaryScreen then
+		right_layout:add(myclock)
+		right_layout:add(wibox.widget.systray())
+	end
 	right_layout:add(mylayoutbox[s])
 
 	-- Now bring it all together (with the tasklist in the middle)
