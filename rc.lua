@@ -140,7 +140,7 @@ local mytasklist = {}
 local myclock = awful.widget.textclock("%a %b %d %r", 1);
 
 myclock:buttons(awful.util.table.join(
-	awful.button({ }, 1, function() os.execute("/usr/bin/gsimplecal &") end )
+	awful.button({ }, 1, function() os.execute("LANG=en_GB.UTF-8 /usr/bin/gsimplecal &") end )
 ))
 
 mytaglist.buttons = awful.util.table.join(
