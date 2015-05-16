@@ -124,9 +124,9 @@ mainmenu = awful.menu({
 	items = {
 		{ "terminal", terminal, "/usr/share/icons/terminology.png" },
 		{ "vivaldi", "vivaldi-preview", "/usr/share/icons/hicolor/32x32/apps/vivaldi.png" },
-		{ "spotify", "spotify", "/usr/share/icons/hicolor/32x32/apps/spotify-client.png" },
-		{ "file browser", fileBrowser, "/usr/share/icons/Faenza/devices/32/drive-harddisk.png" },
+		{ "spotify", "spotify", "/usr/share/icons/Faenza/apps/scalable/spotify.svg" },
 		{ "geary", "geary", "/usr/share/icons/hicolor/32x32/apps/geary.png" },
+		{ "steam", "steam", "/usr/share/icons/Faenza/apps/32/steam.png" },
 		{ "places", places, "/usr/share/icons/Faenza/places/32/folder.png" },
 		{ "awesome", awesomemenu, "/usr/share/icons/Faenza/apps/32/session-properties.png" },
 		{ "system", systemmenu, "/usr/share/icons/Faenza/categories/32/system_section.png" },
