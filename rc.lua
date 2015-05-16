@@ -64,7 +64,7 @@ layouts =
 	awful.layout.suit.floating,
 }
 
-local primaryScreen = 3
+local primaryScreen = math.min(3, screen.count());
 
 naughty.config.defaults.screen = primaryScreen
 -- }}}
