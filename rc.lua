@@ -11,6 +11,7 @@ naughty = require("naughty")
 menubar = require("menubar")
 
 netgraph = require("netgraph")
+tagfactory = require("tagfactory")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -83,10 +84,10 @@ wallpaperTimer:start()
 -- }}}
 
 -- {{{ Tags
-tags = {}
 for s = 1, screen.count() do
-	tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+	awful.tag({ "home" }, s, layouts[1])
 end
+
 -- }}}
 
 -- {{{ Menu
@@ -132,6 +133,7 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mainme
 -- Create a wibox for each screen and add it
 local topwibox = {}
 local mypromptbox = {}
+local mytagfactory = {}
 local mylayoutbox = {}
 local mytaglist = {}
 local downspeedgraph = {}
@@ -186,8 +188,10 @@ mytasklist.buttons = awful.util.table.join(
 
 
 for s = 1, screen.count() do
-	-- Create a promptbox for each screen
 	mypromptbox[s] = awful.widget.prompt()
+
+	mytagfactory[s] = tagfactory(s)
+
 	-- Create an imagebox widget which will contains an icon indicating which layout we're using.
 	-- We need one layoutbox per screen.
 	mylayoutbox[s] = awful.widget.layoutbox(s)
@@ -219,6 +223,7 @@ for s = 1, screen.count() do
 
 	left_layout:add(launcher)
 	left_layout:add(mytaglist[s])
+	left_layout:add(mytagfactory[s].textbox)
 	left_layout:add(mypromptbox[s])
 
 	-- Widgets that are aligned to the right
@@ -297,7 +302,12 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey            }, "r",       function () mypromptbox[mouse.screen]:run() end),
 	
 	-- Menubar
-	awful.key({ modkey            }, "p",       function() menubar.show() end)
+	awful.key({ modkey            }, "p",       function() menubar.show() end),
+
+	-- Tag manipulation
+	awful.key({ modkey            }, "`",       function() mytagfactory[mouse.screen]:prompt() end),
+	awful.key({ modkey            }, "=",       function() mytagfactory[mouse.screen]:create_tag() end),
+	awful.key({ modkey            }, "-",       awful.tag.delete)
 )
 
 clientkeys = awful.util.table.join(
@@ -315,40 +325,42 @@ clientkeys = awful.util.table.join(
 	end)
 )
 
--- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
-for s = 1, screen.count() do
-   keynumber = math.min(9, math.max(#tags[s], keynumber))
-end
-
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, keynumber do
+for i = 1, 9 do
 	globalkeys = awful.util.table.join(globalkeys,
 	awful.key({ modkey }, "#" .. i + 9, function ()
 		local screen = mouse.screen
-		if tags[screen][i] then
-			awful.tag.viewonly(tags[screen][i])
+		local tag = awful.tag.gettags(screen)[i]
+		if tag then
+			awful.tag.viewonly(tag)
 		end
 	end),
 	awful.key({ modkey, "Control" }, "#" .. i + 9,
 	function ()
 		local screen = mouse.screen
-		if tags[screen][i] then
-			awful.tag.viewtoggle(tags[screen][i])
+		local tag = awful.tag.gettags(screen)[i]
+		if tag then
+			awful.tag.viewtoggle(tag)
 		end
 	end),
 	awful.key({ modkey, "Shift" }, "#" .. i + 9,
 	function ()
-		if client.focus and tags[client.focus.screen][i] then
-			awful.client.movetotag(tags[client.focus.screen][i])
+		if client.focus then
+			local tag = awful.tag.gettags(client.focus.screen)[i]
+			if tag then
+				awful.client.movetotag(tag)
+			end
 		end
 	end),
 	awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
 	function ()
-		if client.focus and tags[client.focus.screen][i] then
-			awful.client.toggletag(tags[client.focus.screen][i])
+		if client.focus then
+			local tag = awful.tag.gettags(client.focus.screen)[i]
+			if tag then
+				awful.client.toggletag(tag)
+			end
 		end
 	end))
 end
