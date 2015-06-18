@@ -100,7 +100,7 @@ awesomemenu = {
 
 systemmenu = {
 	{ "suspend", "systemctl suspend", "/usr/share/icons/Faenza/apps/32/system-suspend.png" },
-	{ "reboot", "systemctl restart", "/usr/share/icons/Faenza/apps/32/system-restart.png"},
+	{ "reboot", "systemctl reboot", "/usr/share/icons/Faenza/apps/32/system-restart.png"},
 	{ "power off", "systemctl poweroff", "/usr/share/icons/Faenza/apps/32/system-shut-down.png" }
 }
 
