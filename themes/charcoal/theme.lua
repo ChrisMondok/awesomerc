@@ -35,8 +35,8 @@ theme.basedir = "/home/chris/.config/awesome/themes/charcoal/"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
-theme.taglist_squares_sel   = theme.basedir .. "taglist/squarefw.png"
-theme.taglist_squares_unsel = theme.basedir .. "taglist/squarew.png"
+theme.taglist_squares_sel   = theme.basedir .. "taglist/triangle_filled.png"
+theme.taglist_squares_unsel = theme.basedir .. "taglist/triangle.png"
 
 theme.tasklist_floating_icon = theme.basedir .. "tasklist/floatingw.png"
 
