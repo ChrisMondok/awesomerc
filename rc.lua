@@ -11,6 +11,7 @@ menubar = require("menubar")
 
 netgraph = require("netgraph")
 tagfactory = require("tagfactory")
+conky_hud = require("conky_hud")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -306,7 +307,9 @@ globalkeys = awful.util.table.join(
 	-- Tag manipulation
 	awful.key({ modkey            }, "`",       function() mytagfactory[mouse.screen]:prompt() end),
 	awful.key({ modkey            }, "=",       function() mytagfactory[mouse.screen]:create_tag() end),
-	awful.key({ modkey            }, "-",       awful.tag.delete)
+	awful.key({ modkey            }, "-",       awful.tag.delete),
+
+	awful.key({ modkey            }, "c",       function() myhud:show() end, function() myhud:hide() end)
 )
 
 clientkeys = awful.util.table.join(
@@ -432,6 +435,8 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+myhud = conky_hud()
 
 os.execute("/usr/bin/compton --config /home/chris/.comptonrc.conf &")
 
