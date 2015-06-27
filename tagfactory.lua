@@ -9,12 +9,9 @@ setmetatable(tagfactory, {
 
 local awful = require("awful")
 local wibox = require("wibox")
-local naughty = require("naughty")
 
 function tagfactory.new(s)
 	local self = setmetatable({ entry = "", screen = s }, tagfactory)
-
-	naughty.notify({ text = self.screen })
 
 	self.textbox = wibox.widget.textbox()
 
