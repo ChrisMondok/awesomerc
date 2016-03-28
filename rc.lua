@@ -412,6 +412,10 @@ awful.rules.rules = {
 	{
 		rule = { class = "Gsimplecal" },
 		properties = { y = 32 }
+	},
+	{
+		rule = { class = "steam", name = "Steam Keyboard" },
+		properties = { floating = true, focus = false, ontop = true }
 	}
 }
 -- }}}
