@@ -435,6 +435,7 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+os.execute("/usr/bin/killall compton")
 os.execute("/usr/bin/compton --config /home/chris/.comptonrc.conf &")
 
 -- vim: filetype=lua:shiftwidth=4:tabstop=4:softtabstop=4:textwidth=80:fdm=marker
