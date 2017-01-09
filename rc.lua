@@ -94,33 +94,33 @@ end
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 awesomemenu = { 
-	{ "restart", awesome.restart, "/usr/share/icons/Faenza/actions/32/reload.png" },
-	{ "quit", awesome.quit, "/usr/share/icons/Faenza/actions/32/application-exit.png" }
+	{ "restart", awesome.restart, "/usr/share/icons/Arc/actions/24/reload.png" },
+	{ "quit", awesome.quit, "/usr/share/icons/Arc/actions/24/application-exit.png" }
 }
 
 systemmenu = {
-	{ "suspend", "systemctl suspend", "/usr/share/icons/Faenza/apps/32/system-suspend.png" },
-	{ "reboot", "systemctl reboot", "/usr/share/icons/Faenza/apps/32/system-restart.png"},
-	{ "power off", "systemctl poweroff", "/usr/share/icons/Faenza/apps/32/system-shut-down.png" }
+	{ "suspend", "systemctl suspend", "/usr/share/icons/Arc/actions/24/system-suspend.png" },
+	{ "reboot", "systemctl reboot", "/usr/share/icons/Arc/actions/24/system-restart.png"},
+	{ "power off", "systemctl poweroff", "/usr/share/icons/Arc/actions/24/system-shutdown.png" }
 }
 
 places = {
-	{ "home", fileBrowser .. " /home/chris", "/usr/share/icons/Faenza/places/32/folder-home.png" },
-	{ "downloads", fileBrowser .. " /home/chris/Downloads/", "/usr/share/icons/Faenza/places/32/folder-downloads.png" },
-	{ "music", fileBrowser .. " /home/chris/Music/", "/usr/share/icons/Faenza/places/32/folder-music.png" },
-	{ "quicksilver", fileBrowser .. " /mnt/quicksilver/", "/usr/share/icons/Faenza/devices/32/drive-harddisk-usb.png" },
+	{ "home", fileBrowser .. " /home/chris", "/usr/share/icons/Arc/places/24/folder_home.png" },
+	{ "downloads", fileBrowser .. " /home/chris/Downloads/", "/usr/share/icons/Arc/places/24/folder-download.png" },
+	{ "music", fileBrowser .. " /home/chris/Music/", "/usr/share/icons/Arc/places/24/folder-music.png" },
+	{ "quicksilver", fileBrowser .. " /mnt/quicksilver/", "/usr/share/icons/Arc/devices/24/drive-harddisk.png" },
 }
 
 mainmenu = awful.menu({
 	items = {
 		{ "terminal", terminal, "/usr/share/icons/terminology.png" },
-		{ "vivaldi", "vivaldi", "/usr/share/icons/hicolor/32x32/apps/vivaldi.png" },
-		{ "spotify", "spotify &> /dev/null", "/usr/share/icons/Faenza/apps/scalable/spotify.svg" },
-		{ "geary", "geary", "/usr/share/icons/hicolor/32x32/apps/geary.png" },
-		{ "steam", "steam", "/usr/share/icons/Faenza/apps/32/steam.png" },
-		{ "places", places, "/usr/share/icons/Faenza/places/32/folder.png" },
-		{ "awesome", awesomemenu, "/usr/share/icons/Faenza/apps/32/session-properties.png" },
-		{ "system", systemmenu, "/usr/share/icons/Faenza/categories/32/system_section.png" },
+		{ "vivaldi", "vivaldi", "/usr/share/icons/hicolor/24x24/apps/vivaldi.png" },
+		{ "spotify", "/home/chris/Scripts/spotify-quiet.sh", "/usr/share/icons/hicolor/24x24/apps/spotify.png" },
+		{ "geary", "geary", "/usr/share/icons/hicolor/24x24/apps/geary.png" },
+		{ "steam", "steam", "/usr/share/icons/hicolor/24x24/apps/steam.png" },
+		{ "places", places, "/usr/share/icons/Arc/places/24/folder.png" },
+		{ "awesome", awesomemenu, "/home/chris/.config/awesome/themes/charcoal/awesome-icon.png" },
+		{ "system", systemmenu, "/usr/share/icons/Arc/categories/24/preferences-system.png" },
 	}
 })
 
