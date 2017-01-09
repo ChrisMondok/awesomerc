@@ -114,7 +114,7 @@ places = {
 mainmenu = awful.menu({
 	items = {
 		{ "terminal", terminal, "/usr/share/icons/terminology.png" },
-		{ "vivaldi", "vivaldi", "/usr/share/icons/hicolor/24x24/apps/vivaldi.png" },
+		{ "vivaldi", "vivaldi-stable", "/usr/share/icons/hicolor/24x24/apps/vivaldi.png" },
 		{ "spotify", "/home/chris/Scripts/spotify-quiet.sh", "/usr/share/icons/hicolor/24x24/apps/spotify.png" },
 		{ "geary", "geary", "/usr/share/icons/hicolor/24x24/apps/geary.png" },
 		{ "steam", "steam", "/usr/share/icons/hicolor/24x24/apps/steam.png" },
