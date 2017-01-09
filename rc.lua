@@ -11,7 +11,6 @@ menubar = require("menubar")
 
 netgraph = require("netgraph")
 tagfactory = require("tagfactory")
-conky_hud = require("conky_hud")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -406,10 +405,6 @@ awful.rules.rules = {
 		properties = { floating = true }
 	},
 	{
-		rule = { class = "conky" },
-		properties = { border_width = 0 }
-	},
-	{
 		rule = { class = "Gsimplecal" },
 		properties = { y = 32 }
 	},
@@ -439,8 +434,6 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
-myhud = conky_hud()
 
 os.execute("/usr/bin/compton --config /home/chris/.comptonrc.conf &")
 
